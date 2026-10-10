@@ -1,0 +1,19 @@
+# Arquivos de compressão
+*.zip
+*.rar
+*.tar
+*.gz
+
+# Dependências do Node
+node_modules/
+npm-debug.log
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
