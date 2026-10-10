@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eee9fc">
+  <meta name="description" content="Um espaço simples para receber e compartilhar arquivos.">
+  <title>Ponte — entrega de arquivos</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Ponte, início">
+        <span class="brand-symbol" aria-hidden="true">↗</span>
+        <span id="brand-name">ponte<span class="brand-dot">.</span></span>
+      </a>
+      <span class="header-note"><span class="small-dot" aria-hidden="true"></span> um espaço para suas entregas</span>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">DE UM LADO AO OUTRO</p>
+          <h1 id="page-title">Arquivos prontos.<br><span>Entrega simples.</span></h1>
+          <p class="intro-copy" id="page-description">Um lugar para compartilhar o que importa. Escolha seu arquivo e leve com você.</p>
+        </div>
+        <div class="bridge-art" aria-hidden="true">
+          <span class="art-label label-a">daqui</span>
+          <span class="art-label label-b">pra você</span>
+          <div class="art-orbit"></div>
+          <div class="art-file file-a"><span>↗</span><i></i><i></i></div>
+          <div class="art-file file-b"><span>✓</span><i></i><i></i></div>
+          <span class="art-spark spark-a">✦</span><span class="art-spark spark-b">✧</span>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Central de arquivos">
+        <div class="workspace-top">
+          <div class="tabs" role="tablist" aria-label="O que você quer fazer?">
+            <button id="download-tab" class="tab active" type="button" role="tab" aria-selected="true" aria-controls="download-panel" tabindex="0">↓ Baixar arquivos</button>
+            <button id="upload-tab" class="tab" type="button" role="tab" aria-selected="false" aria-controls="upload-panel" tabindex="-1">↑ Enviar arquivo</button>
+          </div>
+          <span class="workspace-tag">cada entrega, uma conexão</span>
+        </div>
+
+        <section id="download-panel" class="panel" role="tabpanel" aria-labelledby="download-tab">
+          <div class="panel-heading">
+            <div><h2>Disponíveis para você</h2><p id="file-count">Carregando arquivos…</p></div>
+            <label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">Buscar arquivos</span><input id="file-search" type="search" placeholder="Buscar um arquivo" autocomplete="off"></label>
+          </div>
+          <div id="file-list" class="file-list"></div>
+          <p id="empty-files" class="empty-state" hidden>Nenhum arquivo encontrado.</p>
+          <p class="panel-footnote">Escolha “Baixar” para salvar uma cópia no seu dispositivo.</p>
+        </section>
+
+        <section id="upload-panel" class="panel" role="tabpanel" aria-labelledby="upload-tab" hidden>
+          <div class="panel-heading"><div><h2>Um arquivo a caminho</h2><p>Escolha o destino e envie seu arquivo com confirmação de recebimento.</p></div><span id="size-limit" class="limit-tag">Até 10 MiB</span></div>
+          <form id="upload-form">
+            <div class="connection-fields">
+              <label for="api-url">Endereço da API<input id="api-url" name="api-url" type="url" placeholder="https://sua-api.exemplo.com" autocomplete="off" required></label>
+              <label for="api-token">Chave de acesso<input id="api-token" name="api-token" type="password" placeholder="Digite a chave deste envio" autocomplete="off" spellcheck="false" required><span class="field-hint">A chave fica apenas nesta página enquanto ela estiver aberta.</span></label>
+            </div>
+            <div class="connection-row"><button id="check-api" type="button" class="text-button">Verificar conexão ↗</button><span id="connection-status" class="connection-status" role="status" aria-live="polite">Informe a API de destino.</span></div>
+            <label class="drop-zone" id="drop-zone" for="file-input">
+              <input id="file-input" type="file" required aria-describedby="selected-file size-limit">
+              <span class="drop-icon" aria-hidden="true">↑</span>
+              <strong>Solte seu arquivo aqui</strong>
+              <span>ou clique para escolher no seu dispositivo</span>
+              <span id="selected-file" class="selected-file">PDF, planilha, imagem, ZIP… você escolhe.</span>
+            </label>
+            <label class="route-option"><input id="forward-file" type="checkbox"><span>Encaminhar ao outro serviço da ponte</span></label>
+            <div class="upload-actions"><button id="send-file" class="primary-button" type="submit">Enviar arquivo <span aria-hidden="true">↗</span></button><button id="cancel-upload" class="text-button" type="button" hidden>Cancelar</button><span class="action-note">O recebimento confirma o tamanho e a integridade.</span></div>
+            <progress id="upload-progress" aria-label="Envio em andamento" hidden></progress>
+            <p id="upload-status" class="upload-status" role="status" aria-live="polite"></p>
+          </form>
+          <article id="receipt" class="receipt" hidden aria-labelledby="receipt-title">
+            <div class="receipt-heading"><span class="receipt-check" aria-hidden="true">✓</span><div><h3 id="receipt-title">Arquivo recebido</h3><p>O servidor confirmou a integridade desta entrega.</p></div></div>
+            <dl id="receipt-details"></dl>
+          </article>
+        </section>
+      </section>
+      <noscript><p class="empty-state">Ative o JavaScript para listar os arquivos e usar o envio. O arquivo de exemplo também está <a href="arquivos/exemplo.txt" download>disponível aqui</a>.</p></noscript>
+    </main>
+
+    <footer class="site-footer"><span>ponte. <span class="footer-muted">pequena distância, grandes entregas.</span></span><span>Feito para chegar até você <span aria-hidden="true">✦</span></span></footer>
+  </div>
+</body>
+</html>
